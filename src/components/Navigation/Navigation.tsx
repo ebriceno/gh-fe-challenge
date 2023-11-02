@@ -1,5 +1,5 @@
 import CartWidget from '../CartWidget/CartWidget'
-import Link from 'next/Link'
+import Link from 'next/link'
 
 export default function Navigation() {
     return (

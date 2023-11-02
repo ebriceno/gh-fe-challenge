@@ -21,19 +21,18 @@ export default function Category(props: propsType) {
     const { category, products } = props
 
     return (
-        <section className={'flex-column space-x-5 space-y-10 pl-10 pr-10'}>
-            <div className={`${CATEGORY_COLOR[category.name]} font-bold space-y-5 text-2xl mt-5 rounded text-gray-700`}>
+        <section key={category.order} className={'flex-column space-x-5 space-y-10 pl-10 pr-10'}>
+            <div className={`${CATEGORY_COLOR[category.name as keyof typeof CATEGORY_COLOR]} font-bold space-y-5 text-2xl mt-5 rounded text-gray-700`}>
                 <h2 className={`font-bold p-2 ml-4`}>{category.name}</h2>
             </div>
 
             <div
-                key={category.order}
                 className={'flex flex-wrap sm:justify-between md:justify-start'}
             >
                 {
                     products.slice(0, 15).filter(product => product?.category?.name === category.name).map(item => (
                         <>
-                            <ProductCard product={item}/>
+                            <ProductCard key={item.id} product={item}/>
                         </>
                     ))
                 }

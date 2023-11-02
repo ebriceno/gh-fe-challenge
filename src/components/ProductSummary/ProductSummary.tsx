@@ -2,7 +2,7 @@ import { Product } from '../../types/types'
 import AddToBag from '../AddToBag/AddToBag'
 
 type propsType = {
-    products: Product
+    product: Product
 }
 
 export default function ProductSummary(props: propsType) {

@@ -1,11 +1,6 @@
-import { Inter } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import Category from '../components/Category/Category'
 import { BASE_API_URL } from '../utils/constants'
-import CartWidget from "../components/CartWidget/CartWidget";
-
-const inter = Inter({ subsets: ['latin'] })
-
 
 export default function Home() {
 	const [products, setProducts] = useState(null)
@@ -34,7 +29,7 @@ export default function Home() {
 		<>
 			{
 				categories.map(category => (
-					<Category category={category} products={products}/>
+					<Category key={category.order} category={category} products={products}/>
 				))
 			}
 		</>

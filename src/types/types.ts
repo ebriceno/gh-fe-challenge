@@ -11,3 +11,8 @@ export type Product = {
     name: string
     price: number
 }
+
+export type BagItem = {
+    id: number,
+    quantity: number
+}

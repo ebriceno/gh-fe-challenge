@@ -3,8 +3,9 @@ import { useRouter } from 'next/router'
 import { BASE_API_URL, LOCAL_STORAGE_BAG_ITEM, LOCAL_STORAGE_ORDER_NUMBER } from '../utils/constants'
 import { getBagItemCount } from '../utils/utils'
 import ProductSummary from '../components/ProductSummary/ProductSummary'
+import { Product } from '../types/types'
 
-async function submitOrder(products, router) {
+async function submitOrder(products: Product[], router) {
     const response = await fetch(`${BASE_API_URL}/orders?norandom`, {
         method: 'POST',
         headers: {
