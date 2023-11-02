@@ -78,7 +78,6 @@ export default function AddToBag(props: propsType) {
     }, [bag.length])
 
     const isBagItem = bag.map(item => item.id).indexOf(product.id)
-    console.log(isBagItem)
 
     return (
         <div className={'flex-column space-y-5'}>

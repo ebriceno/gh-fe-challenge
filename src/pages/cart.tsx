@@ -61,19 +61,29 @@ export default function Cart() {
 
     return (
         <div className={'flex h-screen'}>
-            <div className={'w-3/5'}>
-                <h1>YOUR CART</h1>
+            <div className={'w-3/5 pl-5 pt-5'}>
+                <h1 className={'text-2xl font-bold'}>YOUR CART</h1>
                 <p>{`TOTAL (${getBagItemCount(bag)} products) £${bagGrandTotal(cartItems)}`}</p>
                 <p>The items in your cart are not reserved. Complete your purchase to get them.</p>
                 <ul>
                     {itemList}
                 </ul>
             </div>
-            <div>
-                <h2>ORDER SUMMARY</h2>
-                <p>{getBagItemCount(bag)} products £{bagGrandTotal(cartItems)}</p>
-                <p>Delivery: Free</p>
-                <p>Total: £{bagGrandTotal(cartItems)}</p>
+            <div className={'pt-5 justify-center ml-36 mr-10'}>
+                <h2 className={'text-xl font-bold'}>ORDER SUMMARY</h2>
+                <div className={'flex w-full justify-between'}>
+                    <p>{getBagItemCount(bag)} products</p>
+                    <span className={'font-bold self-end'}>£{bagGrandTotal(cartItems)}</span>
+                </div>
+                <div className={'flex w-full justify-between'}>
+                    <p>Delivery</p>
+                    <span className={'font-bold self-end'}>Free</span>
+                </div>
+                <div className={'flex w-full justify-between mt-2'}>
+                    <p>Total</p>
+                    <span className={'font-bold self-end'}>£{bagGrandTotal(cartItems)}</span>
+                </div>
+
                 <button
                     className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
                 >

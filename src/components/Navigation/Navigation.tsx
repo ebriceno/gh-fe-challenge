@@ -8,7 +8,7 @@ export default function Navigation() {
         >
             <div className={'flex items-center flex-no-shrink text-white mr-6'}>
                 <Link href='/' className={'text-gray-700 no-underline'}>
-                    <h1 className={'text-2xl pl-2'}>GH Assessment</h1>
+                    <h1 className={'text-3xl pl-2 font-bold'}>GH Assessment</h1>
                 </Link>
             </div>
             <div className={'w-4 lg:flex lg:items-center lg:w-auto hidden lg:block pt-6 lg:pt-0'}>

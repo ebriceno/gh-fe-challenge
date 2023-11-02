@@ -21,7 +21,7 @@ export default function ProductSummary(props: propsType) {
             </div>
 
             <div className="p-4 flex flex-col items-center h-40 w-1/4">
-                <h1 className="text-gray-800 text-center mt-1">{product.name}</h1>
+                <h3 className="text-gray-800 text-center mt-1">{product.name}</h3>
                 <p className="text-center text-gray-800 mt-1 font-bold">{`£${product.price}`}</p>
             </div>
             <AddToBag product={product} />
