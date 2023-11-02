@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { LOCAL_STORAGE_BAG_ITEM } from '../../utils/constants'
 
 type propsType = {
-    products: Product
+    product: Product
 }
 
 export default function AddToBag(props: propsType) {
