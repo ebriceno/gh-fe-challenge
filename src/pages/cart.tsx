@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
-import { BASE_API_URL, LOCAL_STORAGE_BAG_ITEM } from '../utils/constants'
+import { BASE_API_URL, LOCAL_STORAGE_BAG_ITEM, LOCAL_STORAGE_ORDER_NUMBER } from '../utils/constants'
 import { getBagItemCount } from '../utils/utils'
 import ProductSummary from '../components/ProductSummary/ProductSummary'
 
@@ -18,6 +18,7 @@ async function submitOrder(products, router) {
 
     if (content?.id) {
         localStorage.removeItem(LOCAL_STORAGE_BAG_ITEM)
+        localStorage.setItem(LOCAL_STORAGE_ORDER_NUMBER, content.id)
 
         const buy = await fetch(`${BASE_API_URL}/orders/${content.id}/buy?norandom`, {
             method: 'POST',
