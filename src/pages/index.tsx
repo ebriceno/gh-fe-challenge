@@ -2,6 +2,7 @@ import { Inter } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import Category from '../components/Category/Category'
 import { BASE_API_URL } from '../utils/constants'
+import CartWidget from "../components/CartWidget/CartWidget";
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,14 +31,12 @@ export default function Home() {
 	}
 
 	return (
-		<main className={`flex ${inter.className}`}>
-			<div>
-				{
-					categories.map(category => (
-						<Category category={category} products={products}/>
-					))
-				}
-			</div>
-		</main>
+		<>
+			{
+				categories.map(category => (
+					<Category category={category} products={products}/>
+				))
+			}
+		</>
 	)
 }

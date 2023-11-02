@@ -1,5 +1,6 @@
 import { Product } from '../../types/types'
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 
 type propsType = {
     products: Product
@@ -8,6 +9,7 @@ type propsType = {
 export default function AddToBag(props: propsType) {
     const [quantity, setQuantity] = useState(0)
     const [bag, setBag] = useState([])
+    const router = useRouter()
     const { product } = props
 
     const addQuantity = () => {
@@ -40,11 +42,6 @@ export default function AddToBag(props: propsType) {
     }
 
     const addToBag = (productId, quantity) => {
-        if (quantity === 0) {
-            // TODO Handle quantity === 0 error
-            return null
-        }
-
         const currentBag = localStorage.getItem('ghBag')
 
         if (!currentBag) {
@@ -73,6 +70,7 @@ export default function AddToBag(props: propsType) {
                 setBag(bagItems)
             }
         }
+        router.reload()
     }
 
     useEffect(() => {
@@ -80,6 +78,7 @@ export default function AddToBag(props: propsType) {
     }, [bag.length])
 
     const isBagItem = bag.map(item => item.id).indexOf(product.id)
+    console.log(isBagItem)
 
     return (
         <div className={'flex-column space-y-5'}>
@@ -133,6 +132,7 @@ export default function AddToBag(props: propsType) {
             <button
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
                 onClick={() => addToBag(product.id, quantity)}
+                disabled={quantity === 0 && isBagItem === -1}
             >
                 { isBagItem !== -1 ? 'Update order' : 'Add to order'}
                 <svg

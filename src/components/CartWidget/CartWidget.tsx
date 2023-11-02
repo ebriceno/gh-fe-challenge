@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react'
+import { getBagItemCount } from '../../utils/utils'
 import Link from 'next/link'
 
 export default function CartWidget() {
-    const [itemCount, setItemCount] = useState(null)
-    console.log('CarWidget')
+    const [itemCount, setItemCount] = useState(0)
 
     useEffect(() => {
-        console.log('here')
         if (typeof window !== 'undefined') {
             const currentBag = localStorage.getItem('ghBag')
-            const bagItemCount = currentBag ? JSON.parse(currentBag).length : ''
-            console.log('bic', bagItemCount)
-            setItemCount(bagItemCount)
+            const totalItemCount = currentBag ? getBagItemCount(JSON.parse(currentBag)) : 0
+            setItemCount(totalItemCount)
         }
     }, [])
 
+    if (!itemCount) {
+        return null
+    }
 
     return (
         <Link
             href='/cart'
-            className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+            className="py-2 px-4 bg-yellow-500 text-gray-700 rounded hover:bg-yellow-600 active:bg-yellow-500 disabled:opacity-50 flex items-center right"
         >
             <span>{itemCount ? itemCount : ''}</span>
             <svg
