@@ -9,7 +9,7 @@ export default function ProductCard(props: propsType) {
     const { product } = props
 
     return (
-        <div className={'w-80 bg-white shadow rounded h-200'} key={product.id}>
+        <div className={'w-80 bg-white shadow rounded h-200 mt-5 md:mr-8'} key={product.id}>
             <div
                 style={{backgroundImage: `url(${product.image})`}}
                 className={'h-24 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center'}
