@@ -99,8 +99,8 @@ export default function Cart() {
     }
 
     return (
-        <div className={'flex h-screen'}>
-            <div className={'w-3/5 pl-5 pt-5'}>
+        <div className={'flex h-screen flex-wrap'}>
+            <div className={'sm:w-auto md:w-3/5 pl-5 pt-5'}>
                 <h1 className={'text-2xl font-bold'}>YOUR CART</h1>
                 <p>{`TOTAL (${getBagItemCount(bag)} products) £${bagGrandTotal(cartItems)}`}</p>
                 <p>The items in your cart are not reserved. Complete your purchase to get them.</p>
