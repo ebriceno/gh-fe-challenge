@@ -32,13 +32,11 @@ export default function Home() {
 	return (
 		<main className={`flex ${inter.className}`}>
 			<div>
-				<div>
-					{
-						categories.map(category => (
-							<Category category={category} products={products}/>
-						))
-					}
-				</div>
+				{
+					categories.map(category => (
+						<Category category={category} products={products}/>
+					))
+				}
 			</div>
 		</main>
 	)

@@ -1,5 +1,5 @@
 import { Product } from '../../types/types'
-import { useState } from 'react'
+import {useEffect, useState} from 'react'
 
 type propsType = {
     products: Product
@@ -16,11 +16,26 @@ export default function AddToBag(props: propsType) {
         setQuantity(currentQty)
     }
 
-    const substractQuantity = () => {
+    const subtractQuantity = () => {
         let currentQty = quantity
         currentQty--
         if (currentQty >= 0) {
             setQuantity(currentQty)
+        }
+    }
+
+    const syncBag = () => {
+        const currentBag = localStorage.getItem('ghBag')
+
+        if (currentBag && currentBag.length !== bag.length) {
+            const bagItems = JSON.parse(currentBag)
+            setBag(bagItems)
+
+            const syncItem = bagItems.find(item => item.id === product.id)
+
+            if (syncItem) {
+                setQuantity(syncItem.quantity)
+            }
         }
     }
 
@@ -60,6 +75,10 @@ export default function AddToBag(props: propsType) {
         }
     }
 
+    useEffect(() => {
+        syncBag()
+    }, [bag.length])
+
     const isBagItem = bag.map(item => item.id).indexOf(product.id)
 
     return (
@@ -68,7 +87,7 @@ export default function AddToBag(props: propsType) {
                 <button
                     className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
                     disabled={quantity === 0}
-                    onClick={substractQuantity}
+                    onClick={subtractQuantity}
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"

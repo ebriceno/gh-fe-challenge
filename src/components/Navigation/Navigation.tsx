@@ -1,9 +1,12 @@
 import CartWidget from '../CartWidget/CartWidget'
+import Link from 'next/Link'
 
 export default function Navigation() {
     return (
         <nav>
-            <h1>GH Assessment</h1>
+            <Link href='/'>
+                <h1>GH Assessment</h1>
+            </Link>
             <CartWidget />
         </nav>
     )
