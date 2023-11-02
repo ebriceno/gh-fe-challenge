@@ -1,17 +1,42 @@
-import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import { useEffect, useState } from 'react'
+import Category from '../components/Category/Category'
+import { BASE_API_URL } from '../utils/constants'
+import CartWidget from "../components/CartWidget/CartWidget";
 
 const inter = Inter({ subsets: ['latin'] })
 
+
 export default function Home() {
+	const [products, setProducts] = useState(null)
+	const [categories, setCategories] = useState(null)
+	const [loading, setLoading] = useState(false)
+
+	useEffect(() => {
+		if (!loading || !products || !categories) {
+			setLoading(true)
+			Promise.all([fetch(`${BASE_API_URL}/products?norandom`), fetch(`${BASE_API_URL}/categories?norandom`)])
+				.then(responses => Promise.all(responses.map( response => response.json())))
+				.then(data => {
+					setProducts(data[0])
+					setCategories(data[1])
+					setLoading(false)
+				})
+				.catch(error => console.error(error))
+		}
+	}, [])
+
+	if (!products || !categories) {
+		return <div>Loading...</div>
+	}
+
 	return (
-		<main className={`flex min-h-screen flex-col items-center justify-between p-24 ${inter.className}`}>
-			<div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-				<p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-					Get started by editing&nbsp;
-					<code className="font-mono font-bold">src/pages/index.tsx</code>
-				</p>
-			</div>
-		</main>
+		<>
+			{
+				categories.map(category => (
+					<Category category={category} products={products}/>
+				))
+			}
+		</>
 	)
 }
