@@ -1,4 +1,4 @@
-import { Product } from '../../types/types'
+import { Product, BagItem } from '../../types/types'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { LOCAL_STORAGE_BAG_ITEM } from '../../utils/constants'
@@ -34,7 +34,7 @@ export default function AddToBag(props: propsType) {
             const bagItems = JSON.parse(currentBag)
             setBag(bagItems)
 
-            const syncItem = bagItems.find(item => item.id === product.id)
+            const syncItem = bagItems.find((item: BagItem) => item.id === product.id)
 
             if (syncItem) {
                 setQuantity(syncItem.quantity)
@@ -42,22 +42,23 @@ export default function AddToBag(props: propsType) {
         }
     }
 
-    const addToBag = (productId, quantity) => {
+    const addToBag = (productId: number, quantity: number) => {
         const currentBag = localStorage.getItem(LOCAL_STORAGE_BAG_ITEM)
 
         if (!currentBag) {
             localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify([{ id: productId, quantity: quantity}]))
-            setBag([{ id: productId, quantity: quantity}])
+            // setBag([{ id: productId, quantity: quantity}])
         } else {
             const bagItems = JSON.parse(currentBag)
 
-            const shouldUpdateBagItem = bagItems.map(item => item.id).indexOf(productId)
+            const shouldUpdateBagItem = bagItems.map((item: BagItem) => item.id).indexOf(productId)
 
             if (shouldUpdateBagItem !== -1) {
                 const bagItem = bagItems[shouldUpdateBagItem]
                 if (quantity === 0) {
                     bagItems.splice(shouldUpdateBagItem, 1)
                     localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify(bagItems))
+                    console.log('BAG ITEMS', bagItems)
                     setBag(bagItems)
                 } else {
                     bagItem.quantity = quantity
@@ -78,7 +79,7 @@ export default function AddToBag(props: propsType) {
         syncBag()
     }, [bag.length])
 
-    const isBagItem = bag.map(item => item.id).indexOf(product.id)
+    const isBagItem = bag.map((item: BagItem) => item.id).indexOf(product.id)
 
     return (
         <div className={'flex-column space-y-3'}>
