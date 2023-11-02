@@ -37,7 +37,6 @@ export default function AddToBag(props: propsType) {
             setBag([{ id: productId, quantity: quantity}])
         } else {
             const bagItems = JSON.parse(currentBag)
-            console.log(bagItems)
 
             const shouldUpdateBagItem = bagItems.map(item => item.id).indexOf(productId)
 
@@ -61,7 +60,6 @@ export default function AddToBag(props: propsType) {
         }
     }
 
-    console.log('Bag state', bag)
     const isBagItem = bag.map(item => item.id).indexOf(product.id)
 
     return (
