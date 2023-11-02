@@ -1,12 +1,43 @@
 import { useEffect, useState } from 'react'
-import { BASE_API_URL } from '../utils/constants'
+import { useRouter } from 'next/router'
+import { BASE_API_URL, LOCAL_STORAGE_BAG_ITEM } from '../utils/constants'
 import { getBagItemCount } from '../utils/utils'
 import ProductSummary from '../components/ProductSummary/ProductSummary'
+
+async function submitOrder(products, router) {
+    const response = await fetch(`${BASE_API_URL}/orders?norandom`, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(products)
+    })
+
+    const content = await response.json()
+
+    if (content?.id) {
+        localStorage.removeItem(LOCAL_STORAGE_BAG_ITEM)
+
+        const buy = await fetch(`${BASE_API_URL}/orders/${content.id}/buy?norandom`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: content.id })
+        })
+
+        await buy
+        await router.replace('/confirmation')
+    }
+}
 
 export default function Cart() {
     const [bag, setBag] = useState(null)
     const [products, setProducts] = useState(null)
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
 
     let currentBag
 
@@ -25,7 +56,7 @@ export default function Cart() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            currentBag = localStorage.getItem('ghBag')
+            currentBag = localStorage.getItem(LOCAL_STORAGE_BAG_ITEM)
             const bagProducts = JSON.parse(currentBag)
             setBag(bagProducts)
         }
@@ -59,6 +90,13 @@ export default function Cart() {
         </li>
     )
 
+    const placeOrder = () => {
+         const productsOrder = {
+            products: bag
+         }
+        submitOrder(productsOrder, router)
+    }
+
     return (
         <div className={'flex h-screen'}>
             <div className={'w-3/5 pl-5 pt-5'}>
@@ -86,6 +124,7 @@ export default function Cart() {
 
                 <button
                     className="py-2 px-4 bg-green-500 text-white rounded hover:bg-green-600 active:bg-green-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                    onClick={placeOrder}
                 >
                     Place order
                 </button>

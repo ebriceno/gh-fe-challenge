@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { getBagItemCount } from '../../utils/utils'
+import { LOCAL_STORAGE_BAG_ITEM } from '../../utils/constants'
 import Link from 'next/link'
 
 export default function CartWidget() {
@@ -7,7 +8,7 @@ export default function CartWidget() {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
-            const currentBag = localStorage.getItem('ghBag')
+            const currentBag = localStorage.getItem(LOCAL_STORAGE_BAG_ITEM)
             const totalItemCount = currentBag ? getBagItemCount(JSON.parse(currentBag)) : 0
             setItemCount(totalItemCount)
         }

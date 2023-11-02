@@ -1,6 +1,7 @@
 import { Product } from '../../types/types'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
+import { LOCAL_STORAGE_BAG_ITEM } from '../../utils/constants'
 
 type propsType = {
     products: Product
@@ -27,7 +28,7 @@ export default function AddToBag(props: propsType) {
     }
 
     const syncBag = () => {
-        const currentBag = localStorage.getItem('ghBag')
+        const currentBag = localStorage.getItem(LOCAL_STORAGE_BAG_ITEM)
 
         if (currentBag && currentBag.length !== bag.length) {
             const bagItems = JSON.parse(currentBag)
@@ -42,10 +43,10 @@ export default function AddToBag(props: propsType) {
     }
 
     const addToBag = (productId, quantity) => {
-        const currentBag = localStorage.getItem('ghBag')
+        const currentBag = localStorage.getItem(LOCAL_STORAGE_BAG_ITEM)
 
         if (!currentBag) {
-            localStorage.setItem('ghBag', JSON.stringify([{ id: productId, quantity: quantity}]))
+            localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify([{ id: productId, quantity: quantity}]))
             setBag([{ id: productId, quantity: quantity}])
         } else {
             const bagItems = JSON.parse(currentBag)
@@ -56,17 +57,17 @@ export default function AddToBag(props: propsType) {
                 const bagItem = bagItems[shouldUpdateBagItem]
                 if (quantity === 0) {
                     bagItems.splice(shouldUpdateBagItem, 1)
-                    localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                    localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify(bagItems))
                     setBag(bagItems)
                 } else {
                     bagItem.quantity = quantity
-                    localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                    localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify(bagItems))
                     setBag(bagItems)
                 }
             } else {
                 const newItem = { id: productId, quantity: quantity }
                 bagItems.push(newItem)
-                localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                localStorage.setItem(LOCAL_STORAGE_BAG_ITEM, JSON.stringify(bagItems))
                 setBag(bagItems)
             }
         }
