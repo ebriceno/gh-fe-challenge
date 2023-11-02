@@ -1,10 +1,10 @@
 import { Inter } from 'next/font/google'
 import { useEffect, useState } from 'react'
 import Category from '../components/Category/Category'
+import { BASE_API_URL } from '../utils/constants'
 
 const inter = Inter({ subsets: ['latin'] })
 
-const BASE_API_URL = 'https://gh-fe-exercise-api-4f80a724b506.herokuapp.com/api'
 
 export default function Home() {
 	const [products, setProducts] = useState(null)
