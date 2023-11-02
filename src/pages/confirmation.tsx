@@ -7,7 +7,6 @@ export default function Confirmation() {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const orderNumber = localStorage.getItem(LOCAL_STORAGE_ORDER_NUMBER)
-            console.log(orderNumber)
             if (orderNumber) {
                 setOrder(orderNumber)
             }

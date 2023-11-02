@@ -21,8 +21,11 @@ export default function Category(props: propsType) {
     const { category, products } = props
 
     return (
-        <section className={'flex-column space-x-5 space-y-5'}>
-            <h2 className={`${CATEGORY_COLOR[category.name]} font-bold space-y-5`}>{category.name}</h2>
+        <section className={'flex-column space-x-5 space-y-10 pl-5 pr-5'}>
+            <div className={`${CATEGORY_COLOR[category.name]} font-bold space-y-5 text-2xl mt-5 rounded text-gray-700`}>
+                <h2 className={`font-bold p-2 ml-4`}>{category.name}</h2>
+            </div>
+
             <div
                 key={category.order}
                 className={'flex space-x-10'}

@@ -14,7 +14,7 @@ export default function ProductCard(props: propsType) {
                 style={{backgroundImage: `url(${product.image})`}}
                 className={'h-24 w-full bg-gray-200 flex flex-col justify-between p-4 bg-cover bg-center'}
             />
-            <div className="p-4 flex flex-col items-center h-40">
+            <div className="p-3 flex flex-col items-center h-32">
                 <p className="text-gray-400 font-light text-xs text-center">
                     {product.category.name}
                 </p>

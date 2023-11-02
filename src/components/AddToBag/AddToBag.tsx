@@ -81,8 +81,8 @@ export default function AddToBag(props: propsType) {
     const isBagItem = bag.map(item => item.id).indexOf(product.id)
 
     return (
-        <div className={'flex-column space-y-5'}>
-            <div className="inline-flex">
+        <div className={'flex-column space-y-3'}>
+            <div className="flex justify-center">
                 <button
                     className="bg-white rounded-l border text-gray-600 hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50 inline-flex items-center px-2 py-1 border-r border-gray-200"
                     disabled={quantity === 0}
@@ -130,7 +130,7 @@ export default function AddToBag(props: propsType) {
             </div>
 
             <button
-                className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
+                className="py-2 px-4 bg-blue-500 text-white rounded-b hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
                 onClick={() => addToBag(product.id, quantity)}
                 disabled={quantity === 0 && isBagItem === -1}
             >
