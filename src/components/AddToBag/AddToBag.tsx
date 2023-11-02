@@ -1,5 +1,5 @@
 import { Product } from '../../types/types'
-import {useState} from "react";
+import { useState } from 'react'
 
 type propsType = {
     products: Product
@@ -7,6 +7,7 @@ type propsType = {
 
 export default function AddToBag(props: propsType) {
     const [quantity, setQuantity] = useState(0)
+    const [bag, setBag] = useState([])
     const { product } = props
 
     const addQuantity = () => {
@@ -22,6 +23,46 @@ export default function AddToBag(props: propsType) {
             setQuantity(currentQty)
         }
     }
+
+    const addToBag = (productId, quantity) => {
+        if (quantity === 0) {
+            // TODO Handle quantity === 0 error
+            return null
+        }
+
+        const currentBag = localStorage.getItem('ghBag')
+
+        if (!currentBag) {
+            localStorage.setItem('ghBag', JSON.stringify([{ id: productId, quantity: quantity}]))
+            setBag([{ id: productId, quantity: quantity}])
+        } else {
+            const bagItems = JSON.parse(currentBag)
+            console.log(bagItems)
+
+            const shouldUpdateBagItem = bagItems.map(item => item.id).indexOf(productId)
+
+            if (shouldUpdateBagItem !== -1) {
+                const bagItem = bagItems[shouldUpdateBagItem]
+                if (quantity === 0) {
+                    bagItems.splice(shouldUpdateBagItem, 1)
+                    localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                    setBag(bagItems)
+                } else {
+                    bagItem.quantity = quantity
+                    localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                    setBag(bagItems)
+                }
+            } else {
+                const newItem = { id: productId, quantity: quantity }
+                bagItems.push(newItem)
+                localStorage.setItem('ghBag', JSON.stringify(bagItems))
+                setBag(bagItems)
+            }
+        }
+    }
+
+    console.log('Bag state', bag)
+    const isBagItem = bag.map(item => item.id).indexOf(product.id)
 
     return (
         <div className={'flex-column space-y-5'}>
@@ -74,9 +115,9 @@ export default function AddToBag(props: propsType) {
 
             <button
                 className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50 mt-4 w-full flex items-center justify-center"
-                disabled={quantity === 0}
+                onClick={() => addToBag(product.id, quantity)}
             >
-                Add to order
+                { isBagItem !== -1 ? 'Update order' : 'Add to order'}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-6 w-6 ml-2"
